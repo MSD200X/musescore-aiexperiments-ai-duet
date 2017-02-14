@@ -43,8 +43,6 @@ polyphony_model.default_configs['polyphony_rnn'] = (
     polyphony_model.default_configs['polyphony'])
 configs = magenta.models.melody_rnn.melody_rnn_model.default_configs
 configs.update(polyphony_model.default_configs)
-config  = configs[DEFAULT_GENERATOR]
-
 print 'Loading bundle', DEFAULT_GENERATOR
 steps_per_quarter = 4
 
@@ -53,6 +51,7 @@ class GlobalGenerator:
     self.reset_generator(DEFAULT_GENERATOR)
 
   def reset_generator(self, generator_name):
+    config  = configs[generator_name]
     bundle_file = magenta.music.read_bundle_file(
         os.path.abspath(generator_name + '.mag'))
 

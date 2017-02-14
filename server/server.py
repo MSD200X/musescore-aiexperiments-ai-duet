@@ -30,11 +30,6 @@ from flask import Flask
 app = Flask(__name__, static_url_path='', static_folder=os.path.abspath('../static'))
 
 
-@app.route('/reset_generator', methods=['POST'])
-def reset():
-  reset_generator('polyphonic_rnn')
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     now = time.time()
@@ -57,8 +52,13 @@ def predict():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    model = request.args.get('model', None)
+    if model:
+      reset_generator(model)
+      print 'Reset generator to', model
+
     return send_file('../static/index.html')
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080)
+    app.run(host='tatum.mtv.corp.google.com', port=8080)
