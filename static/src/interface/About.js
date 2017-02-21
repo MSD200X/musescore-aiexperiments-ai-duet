@@ -18,82 +18,15 @@ import 'style/about.css'
 import YouTubeIframeLoader from 'youtube-iframe'
 import events from 'events'
 
-<<<<<<< HEAD
-const magentaLink = 'https://magenta.tensorflow.org'
+const magentaLink = 'https://github.com/tensorflow/magenta'
 const sourceCode = 'https://github.com/googlecreativelab/aiexperiments-ai-duet'
-=======
-const magentaLink = 'https://magenta.tensorflow.org/'
-const tfLink = 'https://www.tensorflow.org/'
->>>>>>> upstream/master
 const toneLink = 'https://github.com/Tonejs/Tone.js'
-const sourceCode = 'https://github.com/googlecreativelab/aiexperiments-ai-duet'
 
-<<<<<<< HEAD
-const blurbCopy = `Built by Yotam Mann with friends on the Magenta and Creative Lab teams at Google.
-					It uses <a target='_blank' href='${toneLink}'>Tone.js</a> and tools
-					from the <a target='_blank' href='${magentaLink}'>Magenta project</a>.
-					The open-source code is <a target='_blank' href='${sourceCode}'>available here</a>.`
-=======
 const blurbCopy = `Built by Yotam Mann with friends on the Magenta and Creative Lab teams at Google. 
-					It uses <a target='_blank' href='${tfLink}'>TensorFlow</a>,
-					<a target='_blank' href='${toneLink}'>Tone.js</a> and tools 
+					It uses <a target='_blank' href='${toneLink}'>Tone.js</a> and tools 
 					from the <a target='_blank' href='${magentaLink}'>Magenta project</a>. 
-					The open-source code is <a target='_blank' href='${sourceCode}'>available here</a>.
-					Click the keyboard, use your computer keys, or even plug in a MIDI keyboard.`
->>>>>>> upstream/master
+					The open-source code is <a target='_blank' href='${sourceCode}'>available here</a>.`
 
-
-/*
-export class Model extens events.EventEmitter {
-  constructor(container) {
-    super()
-    this._container = document.createElement('div')
-    this._container.id = 'model'
-    container.appendChild(this._container)
-
-    this._toggleButton = document.createElement('div')
-    this._toggleButton.id = 'modelButton'
-    this._toggleButton.classList.add('open')
-    container.appendChild(this._toggleButton)
-    this._toggleButton.addEventListener('click', (e) => {
-      e.preventDefault()
-      if (this.isOpen()){
-	this.close()
-      } else {
-	this.open()
-      }
-    })
-  }
-  close(){
-    this._toggleButton.classList.remove('close')
-    this._toggleButton.classList.add('open')
-
-    this._container.classList.remove('visible')
-
-    if (this._ytplayer){
-      this._ytplayer.stopVideo()
-    }
-    this.emit('close')
-    if (window.ga){
-      ga('send', 'event', 'AI-Duet', 'Click', 'About - Close')
-    }
-  }
-  open(){
-    this._toggleButton.classList.add('close')
-    this._toggleButton.classList.remove('open')
-
-    this._playButton.classList.add('visible')
-    this._container.classList.add('visible')
-    this.emit('open')
-    if (window.ga){
-      ga('send', 'event', 'AI-Duet', 'Click', 'About - Open')
-    }
-  }
-  isOpen(){
-    return this._container.classList.contains('visible')
-  }
-}
-*/
 export class About extends events.EventEmitter{
 	constructor(container){
 
@@ -123,11 +56,11 @@ export class About extends events.EventEmitter{
 		const title = document.createElement('div')
 		title.id = 'title'
 		title.textContent = 'A.I. Duet'
-		// content.appendChild(title)
+		content.appendChild(title)
 
 		const video = document.createElement('div')
 		video.id = 'video'
-		//vid YT0k99hCY5I
+		//vid YT0k99hCY5I 
 		video.innerHTML = `<iframe id='youtube-iframe' src="https://www.youtube.com/embed/0ZE1bfPtvZo?modestbranding=0&showinfo=0&enablejsapi=1" frameborder="0" allowfullscreen></iframe>`
 		content.appendChild(video)
 
@@ -160,7 +93,7 @@ export class About extends events.EventEmitter{
 
 		this._container.classList.remove('visible')
 
-		if (this._ytplayer && this._ytplayer.stopVideo){
+		if (this._ytplayer){
 			this._ytplayer.stopVideo()
 		}
 		this.emit('close')
@@ -168,7 +101,7 @@ export class About extends events.EventEmitter{
 			ga('send', 'event', 'AI-Duet', 'Click', 'About - Close')
 		}
 	}
-	open(play=false){
+	open(){
 		this._toggleButton.classList.add('close')
 		this._toggleButton.classList.remove('open')
 
@@ -178,27 +111,8 @@ export class About extends events.EventEmitter{
 		if (window.ga){
 			ga('send', 'event', 'AI-Duet', 'Click', 'About - Open')
 		}
-		if (play){
-			this._playVideo()
-		}
-	}
-	// waits until the player is ready to play the video, 
-	// otherwise goes back into waiting loop
-	_playVideo(retries=0){
-		if (this._ytplayer && this._ytplayer.playVideo){
-			this._ytplayer.playVideo()
-		} else if (retries < 10 && this.isOpen()){
-			setTimeout(() => this._playVideo(retries+1), 200);
-		}	
 	}
 	isOpen(){
 		return this._container.classList.contains('visible')
 	}
-<<<<<<< HEAD
 }
-=======
-	showButton(){
-		this._toggleButton.classList.add('show')
-	}
-}
->>>>>>> upstream/master
