@@ -37,15 +37,6 @@ class AI extends events.EventEmitter{
     this._midi = new MidiConvert.create()
     this._track = this._midi.track()
   }
-
-<<<<<<< HEAD
-
-
-      request.load(`/predict?duration=${endTime + additional}`, JSON.stringify(request.toArray()), 'POST').then((response) => {
-		   response.slice(endTime / 2).tracks[1].notes.forEach((note) => {
-
-
-=======
 	send(){
 		//trim the track to the first note
 		if (this._track.length){
