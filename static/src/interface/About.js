@@ -28,6 +28,7 @@ const blurbCopy = `Built by Yotam Mann with friends on the Magenta and Creative 
 					The open-source code is <a target='_blank' href='${sourceCode}'>available here</a>.`
 
 
+/*
 export class Model extens events.EventEmitter {
   constructor(container) {
     super()
@@ -77,7 +78,7 @@ export class Model extens events.EventEmitter {
     return this._container.classList.contains('visible')
   }
 }
-
+*/
 export class About extends events.EventEmitter{
 	constructor(container){
 

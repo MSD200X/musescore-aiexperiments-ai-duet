@@ -34,9 +34,9 @@ import pretty_midi
 
 
 DEFAULT_GENERATOR = 'polyphony_rnn'
-DEFAULT_GENERATOR = 'basic_rnn'
-DEFAULT_GENERATOR = 'attention_rnn'
-DEFAULT_GENERATOR = 'lookback_rnn'
+#DEFAULT_GENERATOR = 'basic_rnn'
+#DEFAULT_GENERATOR = 'attention_rnn'
+#DEFAULT_GENERATOR = 'lookback_rnn'
 
 # TODO(deck): Fix key in this dictionary to be 'polyphony_rnn', not 'polyphony'
 polyphony_model.default_configs['polyphony_rnn'] = (
@@ -93,7 +93,10 @@ def generate_midi(midi_data, total_seconds=10):
         qpm = 120
     primer_sequence.tempos[0].qpm = qpm
 
-    print 'Generator', GLOBAL_GENERATOR.generator
+    print 'Primer sequence is'
+    for note in primer_sequence.notes:
+      print 'Note %i %4.4f %4.4f' % (note.pitch, note.start_time, note.end_time)
+    print 'With tempo', qpm
 
     generator_options = generator_pb2.GeneratorOptions()
     # Set the start time to begin on the next step after the last note ends.

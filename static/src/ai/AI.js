@@ -31,7 +31,6 @@ class AI extends events.EventEmitter{
 
     this._lastPhrase = -1
 
-    this._aiEndTime = 0
   }
 
   _newTrack(){
@@ -40,6 +39,7 @@ class AI extends events.EventEmitter{
   }
 
   send(){
+    console.log('Send triggered')
     //trim the track to the first note
     if (this._track.length){
       let request = this._midi.slice(this._midi.startTime)
@@ -47,7 +47,8 @@ class AI extends events.EventEmitter{
       let endTime = request.duration
       //shorten the request if it's too long
       if (endTime > 10){
-	request = request.slice(request.duration - 15)
+	console.log('Shortening request')
+	request = request.slice(request.duration - 10)
 	endTime = request.duration
       }
       let additional = endTime
@@ -55,7 +56,7 @@ class AI extends events.EventEmitter{
       additional = Math.max(additional, 1)
       let actions = []
       request.load(`/predict?duration=${endTime + additional}`, JSON.stringify(request.toArray()), 'POST').then((response) => {
-	response.slice(endTime / 2).tracks[1].notes.forEach((note) => {
+		   response.slice(endTime / 2).tracks[1].notes.forEach((note) => {
 	  actions.push({
 	    curr_time: note.noteOn,
 	    action: 'keyDown',
@@ -93,11 +94,14 @@ class AI extends events.EventEmitter{
     delete this._heldNotes[note]
     // send something if there are no events for a moment
     if (Object.keys(this._heldNotes).length === 0){
-      if (this._lastPhrase !== -1 && Date.now() - this._lastPhrase > 3000){
+      if (this._lastPhrase !== -1 && Date.now() - this._lastPhrase > 10000){
 	//just send it
 	this.send()
       } else {
-	this._sendTimeout = setTimeout(this.send.bind(this), 600 + (time - Tone.now()) * 1000)
+	let timeout_debug = 1200 + (time - Tone.now()) * 1000
+	console.log('Setting timeout', timeout_debug)
+	console.log('compared to ', Tone.now())
+	this._sendTimeout = setTimeout(this.send.bind(this), 1200 + (time - Tone.now()) * 1000)
       }
     }
   }
