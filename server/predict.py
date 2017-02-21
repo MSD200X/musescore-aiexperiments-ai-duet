@@ -33,6 +33,7 @@ import tempfile
 import pretty_midi
 
 
+BUNDLE_NAME = 'attention_rnn'
 DEFAULT_GENERATOR = 'polyphony_rnn'
 #DEFAULT_GENERATOR = 'basic_rnn'
 #DEFAULT_GENERATOR = 'attention_rnn'

@@ -38,41 +38,51 @@ class AI extends events.EventEmitter{
     this._track = this._midi.track()
   }
 
-  send(){
-    console.log('Send triggered')
-    //trim the track to the first note
-    if (this._track.length){
-      let request = this._midi.slice(this._midi.startTime)
-      this._newTrack()
-      let endTime = request.duration
-      //shorten the request if it's too long
-      if (endTime > 10){
-	console.log('Shortening request')
-	request = request.slice(request.duration - 10)
-	endTime = request.duration
-      }
-      let additional = endTime
-      additional = Math.min(additional, 8)
-      additional = Math.max(additional, 1)
-      let actions = []
+<<<<<<< HEAD
+
+
       request.load(`/predict?duration=${endTime + additional}`, JSON.stringify(request.toArray()), 'POST').then((response) => {
 		   response.slice(endTime / 2).tracks[1].notes.forEach((note) => {
-	  actions.push({
-	    curr_time: note.noteOn,
-	    action: 'keyDown',
-	    note: note
-	  })
-	  note.duration = note.duration * 0.9
-	  note.duration = Math.min(note.duration, 4)
-	  actions.push({
-	    curr_time: note.noteOff,
-	    action: 'keyUp',
-	    note: note
-	  })
-        })
-	for (let action of actions) {
-	  const now = Tone.now() + 0.05
-	  this.emit(action.action, action.note.midi, action.curr_time + now)
+
+
+=======
+	send(){
+		//trim the track to the first note
+		if (this._track.length){
+			let request = this._midi.slice(this._midi.startTime)
+			this._newTrack()
+			let endTime = request.duration
+			//shorten the request if it's too long
+			if (endTime > 10){
+				request = request.slice(request.duration - 15)
+				endTime = request.duration
+			}
+			let additional = endTime
+			additional = Math.min(additional, 8)
+         	        additional = Math.max(additional, 1)
+		        let actions = []
+			request.load(`./predict?duration=${endTime + additional}`, JSON.stringify(request.toArray()), 'POST').then((response) => {
+				response.slice(endTime / 2).tracks[1].notes.forEach((note) => {
+			    actions.push({
+	    		        curr_time: note.noteOn,
+	                        action: 'keyDown',
+	                        note: note
+	                    })
+	                    note.duration = note.duration * 0.9
+	                    note.duration = Math.min(note.duration, 4)
+	                    actions.push({
+	                        curr_time: note.noteOff,
+	                        action: 'keyUp',
+	                        note: note
+	                    })
+                        })
+			for (let action of actions) {
+	                    const now = Tone.now() + 0.05
+	                    this.emit(action.action, action.note.midi, action.curr_time + now)
+			})
+			this._lastPhrase = -1
+			this.emit('sent')
+		}
 	}
       })
       this._lastPhrase = -1
